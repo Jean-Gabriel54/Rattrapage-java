@@ -1,27 +1,26 @@
 package model.element;
 
 import java.awt.Point;
-import java.util.List;
 
 public class WallElement extends GameElement {
-	private LightElement creator;
+	private int creatorId;
 	private int health = 3;
-	public WallElement(Point position, LightElement creator) {
+	public WallElement(Point position, int creatorId) {
 		super(position);
-		setCreator(creator);
+		setCreator(creatorId);
 		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @return the creator
 	 */
-	public LightElement getCreator() {
-		return creator;
+	public int getCreator() {
+		return creatorId;
 	}
 	/**
 	 * @param creator the creator to set
 	 */
-	public void setCreator(LightElement creator) {
-		this.creator = creator;
+	public void setCreator(int creatorId) {
+		this.creatorId = creatorId;
 	}
 	
 	@Override

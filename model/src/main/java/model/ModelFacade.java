@@ -1,9 +1,6 @@
 package model;
 
 import java.awt.Dimension;
-import java.sql.SQLException;
-import java.util.List;
-
 import model.element.EContext;
 import model.element.GameElement;
 import model.element.LightElement;
@@ -39,10 +36,12 @@ public final class ModelFacade implements IModel {
 		for (GameElement element: getGame().getElements()) {
 			element.behaviour(EContext.beforeMoving);
 		}
+		getGame().getElements().addAll(getGame().getToAddElements());
 
 		for (GameElement element: getGame().getElements()) {
 			element.behaviour(EContext.afterMoving);
 		}
+		getGame().getElements().addAll(getGame().getToAddElements());
 		
 		for (GameElement element: getGame().getElements()) {
 			for (GameElement element2: getGame().getElements()) {

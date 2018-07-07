@@ -1,6 +1,7 @@
 package controller;
 
 import model.IModel;
+import view.EElement;
 import view.IView;
 
 /**
@@ -9,7 +10,7 @@ import view.IView;
  * @author Jean-Aymeric DIET jadiet@cesi.fr
  * @version 1.0
  */
-public class ControllerFacade implements IController {
+public class ControllerFacade implements IController, Runnable {
 
     /** The view. */
     private final IView  view;
@@ -38,7 +39,11 @@ public class ControllerFacade implements IController {
     public void start() {
         this.getView().displayMessage("Bienvenue dans TRON");
         this.getModel().initGame(600, 400);
+        this.run();
     }
+    
+    
+    
 
     /**
      * Gets the view.
@@ -57,4 +62,22 @@ public class ControllerFacade implements IController {
     public IModel getModel() {
         return this.model;
     }
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+		while(true) {
+			getModel().updateGame();
+			//updateView()
+		    try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+	}
 }

@@ -1,13 +1,16 @@
 package model.element;
 
 import java.awt.Point;
-import java.util.List;
+import model.Game;
 
 public class LightElement extends GameElement{
 	private EDirection direction;
-	private List<GameElement> map;
-	public LightElement(List<GameElement> map, Point position, EDirection direction) {
+	private Game game;
+	private int playerId;
+	public LightElement(int playerId, Game game, Point position, EDirection direction) {
 		super(position);
+		setDirection(direction);
+		setGame(game);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -43,7 +46,7 @@ public class LightElement extends GameElement{
 
 		}else if(context == EContext.afterMoving) {
 			Point padding = getMovementPadding();
-			getMap().add(new WallElement(new Point(super.getPosition().x + padding.x * -1, super.getPosition().y + padding.y * -1), this));
+			getGame().getToAddElements().add(new WallElement(new Point(super.getPosition().x + padding.x * -1, super.getPosition().y + padding.y * -1), getPlayerId()));
 		}
 	}
 
@@ -61,17 +64,31 @@ public class LightElement extends GameElement{
 		this.direction = direction;
 	}
 	/**
-	 * @return the map
+	 * @return the playerId
 	 */
-	public List<GameElement> getMap() {
-		return map;
+	public int getPlayerId() {
+		return playerId;
 	}
 
 	/**
-	 * @param map the map to set
+	 * @param playerId the playerId to set
 	 */
-	public void setMap(List<GameElement> map) {
-		this.map = map;
+	public void setPlayerId(int playerId) {
+		this.playerId = playerId;
+	}
+
+	/**
+	 * @return the game
+	 */
+	public Game getGame() {
+		return game;
+	}
+
+	/**
+	 * @param game the game to set
+	 */
+	public void setGame(Game game) {
+		this.game = game;
 	}
 
 
