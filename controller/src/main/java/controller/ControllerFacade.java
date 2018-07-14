@@ -1,7 +1,11 @@
 package controller;
 
+import java.awt.Point;
+
+import javax.sql.rowset.serial.SerialArray;
+
+import model.GameStatement;
 import model.IModel;
-import view.EElement;
 import view.IView;
 
 /**
@@ -17,6 +21,9 @@ public class ControllerFacade implements IController, Runnable {
 
     /** The model. */
     private final IModel model;
+    	
+    private final int HEIGHT = 85;
+    private final int WIDTH = 85;
 
     /**
      * Instantiates a new controller facade.
@@ -38,7 +45,8 @@ public class ControllerFacade implements IController, Runnable {
      */
     public void start() {
         this.getView().displayMessage("Bienvenue dans TRON");
-        this.getModel().initGame(600, 400);
+        this.getModel().initGame(HEIGHT, WIDTH);
+        this.getView().createWindow(HEIGHT, WIDTH);
         this.run();
     }
     
@@ -65,19 +73,45 @@ public class ControllerFacade implements IController, Runnable {
 
 	@Override
 	public void run() {
+		GameStatement gameStatus = getModel().updateGame();
 		// TODO Auto-generated method stub
-
-		while(true) {
-			getModel().updateGame();
-			//updateView()
-		    try {
-				Thread.sleep(1000);
+		while(gameStatus.getAlivePlayer() > 1) {
+			updateView();
+			gameStatus = getModel().updateGame();
+			try {
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
+		String message;
+		if(gameStatus.getAlivePlayer() > 0) {
+			message = "Game over, winner: " + gameStatus.getWinner();
+		}else {
+			message = "Game over, there is no winner: " + gameStatus.getWinner();
+		}
+		message += " time: " + gameStatus.getTime() + " tick";
+		getView().displayMessage(message);
 		
+	}
+	
+	public void updateView() {
+		for (String instruction : getModel().getInstructionToView()) {
+			String param[] = instruction.split(";");
+			if(param[0].equals("appear")) {
+				getView().appear(new Point(Integer.parseInt(param[1]), Integer.parseInt(param[2])),  param[3], param[4]);
+			}else if(param[0].equals("disappear")) {
+				getView().disappear(new Point(Integer.parseInt(param[1]), Integer.parseInt(param[2])));
+
+			}else {
+				System.out.println("not found param: " + param[0]);
+			}
+		}
+	}
+	
+	public void movePlayer(int playerId, boolean toLeft) {
+		getModel().movePlayer(playerId, toLeft);
 	}
 }

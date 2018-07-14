@@ -3,8 +3,10 @@ package model.element;
 import java.awt.Point;
 
 public class WallElement extends GameElement {
+	public static int MAX_HEALTH = 100;
 	private int creatorId;
-	private int health = 3;
+	
+	private int health = MAX_HEALTH;
 	public WallElement(Point position, int creatorId) {
 		super(position);
 		setCreator(creatorId);
@@ -27,7 +29,7 @@ public class WallElement extends GameElement {
 	public void behaviour(EContext context) {
 		if (context == EContext.beforeMoving) {
 			setHealth(getHealth() - 1);
-			if(getHealth() == 0) {
+			if(getHealth() == -1) {
 				super.setAlive(false);
 			}
 		}

@@ -1,5 +1,10 @@
 package view;
 
+import java.awt.Point;
+import java.util.List;
+
+import controller.IController;
+
 /**
  * <h1>The Interface IView.</h1>
  *
@@ -15,4 +20,17 @@ public interface IView {
      *            the message
      */
     void displayMessage(String message);
+    //void updateView(List<String> elements);
+   
+	void appear( Point position, String element, String player); 
+	void disappear( Point position);
+
+		
+		
+    void createWindow(int width, int height);
+
+	IController getController();
+
+	void setController(IController controller);
 }
+

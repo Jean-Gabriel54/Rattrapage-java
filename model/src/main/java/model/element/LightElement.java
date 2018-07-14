@@ -7,10 +7,12 @@ public class LightElement extends GameElement{
 	private EDirection direction;
 	private Game game;
 	private int playerId;
+	private Point previousPosition;
 	public LightElement(int playerId, Game game, Point position, EDirection direction) {
 		super(position);
 		setDirection(direction);
 		setGame(game);
+		setPlayerId(playerId);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -42,6 +44,7 @@ public class LightElement extends GameElement{
 	public void behaviour(EContext context) {
 		if(context == EContext.beforeMoving) {
 			Point padding = getMovementPadding();
+			setPreviousPosition(getPosition());
 			setPosition(new Point(super.getPosition().x + padding.x, super.getPosition().y + padding.y));
 
 		}else if(context == EContext.afterMoving) {
@@ -89,6 +92,20 @@ public class LightElement extends GameElement{
 	 */
 	public void setGame(Game game) {
 		this.game = game;
+	}
+
+	/**
+	 * @return the previousPosition
+	 */
+	public Point getPreviousPosition() {
+		return previousPosition;
+	}
+
+	/**
+	 * @param previousPosition the previousPosition to set
+	 */
+	public void setPreviousPosition(Point previousPosition) {
+		this.previousPosition = previousPosition;
 	}
 
 

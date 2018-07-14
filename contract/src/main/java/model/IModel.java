@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -11,5 +10,8 @@ import java.util.List;
  */
 public interface IModel {
 	public void initGame(int width, int height);
-	public void updateGame();
+	public GameStatement updateGame();
+	public List<String> getInstructionToView();
+	void movePlayer(int playerId, boolean toLeft);
+
 }

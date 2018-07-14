@@ -8,4 +8,6 @@ package controller;
  */
 public interface IController {
 
+	void movePlayer(int playerId, boolean toLeft);
+
 }

@@ -2,6 +2,7 @@ package main;
 
 import controller.ControllerFacade;
 import model.ModelFacade;
+import view.IView;
 import view.ViewFacade;
 
 /**
@@ -19,8 +20,9 @@ public abstract class Main {
      *            the arguments
      */
     public static void main(final String[] args) {
-        final ControllerFacade controller = new ControllerFacade(new ViewFacade(), new ModelFacade());
-
+    	IView myView = new ViewFacade();
+        final ControllerFacade controller = new ControllerFacade(myView, new ModelFacade());
+        myView.setController(controller);
         controller.start();
         
     }
